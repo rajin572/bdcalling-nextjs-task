@@ -1,3 +1,4 @@
+import Footer from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
 import TopNav from "@/components/shared/TopNav";
 import React from "react";
@@ -10,8 +11,8 @@ const CommonLayout = ({ children }: { children: React.ReactNode }) => {
         <Navbar />
       </div>
       <div>{children}</div>
-      {/* <Footer />
-      <Toaster /> */}
+      <Footer />
+      {/* <Toaster /> */}
     </div>
   );
 };

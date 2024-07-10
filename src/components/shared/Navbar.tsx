@@ -8,19 +8,19 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 
 const NavItems = [
-  { id: "1", name: "Home", route: "/" },
-  { id: "1", name: "Our menus", route: "/" },
-  { id: "1", name: "Meal Plans", route: "/" },
-  { id: "1", name: "Catering", route: "/" },
-  { id: "1", name: "How it work", route: "/" },
-  { id: "2", name: "Testimonial", route: "/" },
-  { id: "2", name: "FAQ", route: "/projects" },
+  { name: "Home", route: "/" },
+  { name: "Our menus", route: "/" },
+  { name: "Meal Plans", route: "/" },
+  { name: "Catering", route: "/" },
+  { name: "How it work", route: "/" },
+  { name: "Testimonial", route: "/" },
+  { name: "FAQ", route: "/projects" },
 ];
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
-    <div className="bg-[#ECF5FF] z-[999] border-b-2 border-secondary py-1 text-slate-800">
+    <div className="bg-[#ECF5FF] z-[999] shadow py-1 text-slate-800">
       <Container>
         <header className=" mx-auto flex justify-between items-center z-50 ">
           {/* //* Menu Icons for mobile */}
@@ -86,13 +86,11 @@ const Navbar = () => {
             <div className="hidden lg:block">
               <ul className="flex justify-end items-center gap-2 lg:flex-row flex-col lg:py-0 py-10">
                 {NavItems.map((navItem, index) => (
-                  <Link key={navItem.id} href={navItem.route}>
+                  <Link key={index} href={navItem.route}>
                     <li
-                      className={`lg:mb-0 mb-5 cursor-pointer text-sm group relative px-3 md:text-base border-e-2 border-zinc-400 ${
-                        index === 6
-                          ? "border-e-0"
-                          : "border-e-2 border-zinc-400"
-                      } `}
+                      className={`${
+                        index === 6 ? "" : "border-e-2 border-zinc-400"
+                      } lg:mb-0 mb-5 cursor-pointer text-sm group relative px-3 md:text-base`}
                     >
                       {navItem.name}
                     </li>
@@ -103,9 +101,9 @@ const Navbar = () => {
             {/* //*For Tab or Mobile */}
             <div className="block lg:hidden">
               <ul className="flex justify-end items-center gap-2 lg:flex-row flex-col lg:py-0 py-10 bg-[#ECF5FF] border-b border-secondary">
-                {NavItems.map((navItem) => (
+                {NavItems.map((navItem, index) => (
                   <li
-                    key={navItem.id}
+                    key={index}
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                     className="w-full lg:w-fit text-center py-2 cursor-pointer group text-sm relative md:text-[18px] "
                   >
@@ -126,7 +124,7 @@ const Navbar = () => {
               </li>
               <Link href="/signIn">
                 <li className="cursor-pointer text-sm font-semibold group relative px-2 md:text-[18px] ">
-                  <Button className="px-4 bg-secondary text-white hover:bg-white hover:text-secondary border border-secondary rounded-lg duration-500">
+                  <Button className="px-4 bg-secondary text-white hover:bg-secondary hover:text-white border border-secondary rounded-lg duration-500">
                     Sign up
                   </Button>
                 </li>
