@@ -1,4 +1,7 @@
 import foodImg1 from "@/assest/images/foodImg1.jpeg";
+import foodImg2 from "@/assest/images/foodImg2.jpeg";
+import foodImg3 from "@/assest/images/foodImg3.jpeg";
+import foodImg4 from "@/assest/images/foodImg4.jpeg";
 import ProductCard from "../ui/ProductCard";
 import {
   Carousel,
@@ -26,7 +29,25 @@ const feedbacks = [
     protein: 49,
     carbs: 23,
     fat: 23,
-    image: foodImg1.src,
+    image: foodImg2.src,
+  },
+  {
+    name: "Healthy Food Name",
+    rating: 4.5,
+    price: 100,
+    protein: 49,
+    carbs: 23,
+    fat: 23,
+    image: foodImg3.src,
+  },
+  {
+    name: "Healthy Food Name",
+    rating: 4.5,
+    price: 100,
+    protein: 49,
+    carbs: 23,
+    fat: 23,
+    image: foodImg4.src,
   },
   {
     name: "Healthy Food Name",
@@ -44,7 +65,7 @@ const feedbacks = [
     protein: 49,
     carbs: 23,
     fat: 23,
-    image: foodImg1.src,
+    image: foodImg2.src,
   },
   {
     name: "Healthy Food Name",
@@ -53,7 +74,7 @@ const feedbacks = [
     protein: 49,
     carbs: 23,
     fat: 23,
-    image: foodImg1.src,
+    image: foodImg3.src,
   },
   {
     name: "Healthy Food Name",
@@ -62,9 +83,8 @@ const feedbacks = [
     protein: 49,
     carbs: 23,
     fat: 23,
-    image: foodImg1.src,
+    image: foodImg4.src,
   },
-  // Add more items as needed
 ];
 
 const Products = ({ children }: { children: ReactNode }) => {

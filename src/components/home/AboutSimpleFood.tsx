@@ -35,7 +35,7 @@ const AboutSimpleFood = () => {
         <h2 className="text-3xl lg:text-4xl font-extrabold text-gray-700 mb-14 text-center">
           Why Simply Good Food
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-18">
           {benefits.map((benefit, index) => (
             <BenefitCard key={index} {...benefit} />
           ))}

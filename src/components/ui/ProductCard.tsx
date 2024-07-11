@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { IoStar } from "react-icons/io5";
 
@@ -35,7 +36,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <IoStar className="text-amber-500" />
         <span className="ml-1 text-sm text-amber-500">{rating}/5</span>
       </div>
-      <h3 className="text-lg font-bold text-slate-600 mb-3">{name}</h3>
+      <Link href="/productDetails">
+        <h3 className="text-lg font-bold text-slate-600 mb-3">{name}</h3>
+      </Link>
       <p className="text-sm text-gray-500 font-bold mb-4">${price}</p>
       <button className="bg-green-500 text-white py-2 px-4 rounded-lg mb-4">
         Add to cart

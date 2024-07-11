@@ -90,7 +90,7 @@ const Navbar = () => {
                     <li
                       className={`${
                         index === 6 ? "" : "border-e-2 border-zinc-400"
-                      } lg:mb-0 mb-5 cursor-pointer text-sm group relative px-3 md:text-base`}
+                      } lg:mb-0 mb-5 cursor-pointer lg:text-sm xl:text-base group relative px-3`}
                     >
                       {navItem.name}
                     </li>
@@ -117,11 +117,13 @@ const Navbar = () => {
           {/* //*More nav Links */}
           <div className="">
             <ul className="flex justify-end items-center gap-2 flex-row py-0">
-              <li className="cursor-pointer text-sm group relative px-2 md:text-[18px] ">
-                <Button className="px-4 hover:bg-secondary hover:text-white bg-slate-200 text-secondary border border-secondary rounded-lg duration-500">
-                  Log in
-                </Button>
-              </li>
+              <Link href="/login">
+                <li className="cursor-pointer text-sm group relative px-2 md:text-[18px] ">
+                  <Button className="px-4 hover:bg-secondary hover:text-white bg-slate-200 text-secondary border border-secondary rounded-lg duration-500">
+                    Log in
+                  </Button>
+                </li>
+              </Link>
               <Link href="/signIn">
                 <li className="cursor-pointer text-sm font-semibold group relative px-2 md:text-[18px] ">
                   <Button className="px-4 bg-secondary text-white hover:bg-secondary hover:text-white border border-secondary rounded-lg duration-500">
