@@ -4,52 +4,69 @@ import Container from "@/components/ui/Container";
 import Image from "next/image";
 import { useState } from "react";
 import { BiShow } from "react-icons/bi";
-import { IoEyeOffOutline } from "react-icons/io5";
+import { GrHide } from "react-icons/gr";
 import backgroundImg from "@/assest/images/AuthBackground.jpeg";
 import authImg from "@/assest/images/authImage.png";
-import { useForm } from "react-hook-form";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { IoEyeOffOutline } from "react-icons/io5";
 import { toast } from "sonner";
 
 const formSchema = z.object({
+  username: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
   email: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
-
+  contactNumber: z.string().min(5, {
+    message: "Username must be at least 5 characters.",
+  }),
+  address: z.string().min(5, {
+    message: "Username must be at least 5 characters.",
+  }),
   password: z.string().min(6, {
+    message: "password must be at least 6 characters.",
+  }),
+  confirmPassword: z.string().min(6, {
     message: "password must be at least 6 characters.",
   }),
 });
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      username: "",
       email: "",
+      contactNumber: "",
       password: "",
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const toastId = toast.loading("Signing In....");
+    const toastId = toast.loading("Sign up your account....");
     try {
+      if (values.password !== values.confirmPassword) {
+        throw new Error("Password Dosen't Match");
+      }
       console.log(values);
-      toast.success("Sign In Successfully", {
+      toast.success("Sign Up Successfully", {
         id: toastId,
         duration: 1000,
       });
@@ -60,7 +77,6 @@ const LoginPage = () => {
       });
     }
   }
-
   return (
     <div
       style={{
@@ -71,7 +87,7 @@ const LoginPage = () => {
         backgroundSize: "cover",
       }}
     >
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center py-10">
         <Container>
           <section className="">
             <div className=" min-h-screen">
@@ -89,16 +105,35 @@ const LoginPage = () => {
 
                 <div className="p-4 md:p-8 bg-[#ffffff] bg-opacity-60 rounded-xl w-[290px] md:w-[500px]">
                   <h2 className="text-lg text-center font-semibold mb-4">
-                    Sign in to your account
+                    Sign up
                   </h2>
                   <p className="text-xs mb-4 text-center">
-                    Please enter your email and password to continue
+                    Please Enter Your Personal Data
                   </p>
                   <Form {...form}>
                     <form
                       onSubmit={form.handleSubmit(onSubmit)}
                       className="space-y-4"
                     >
+                      <FormField
+                        control={form.control}
+                        name="username"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-gray-700">
+                              User Name
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                className="w-full px-4 py-2 border rounded-3xl focus:outline-none "
+                                placeholder="Asadujjaman"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                       <FormField
                         control={form.control}
                         name="email"
@@ -120,11 +155,82 @@ const LoginPage = () => {
                       />
                       <FormField
                         control={form.control}
+                        name="contactNumber"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-gray-700">
+                              Contact Number
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                className="w-full px-4 py-2 border rounded-3xl focus:outline-none "
+                                placeholder="+8801647742754"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="address"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-gray-700">
+                              Permanent Address{" "}
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                className="w-full px-4 py-2 border rounded-3xl focus:outline-none "
+                                placeholder="R no 1 , Block B, CITY X, USA"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
                         name="password"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel className="text-gray-700">
                               Password
+                            </FormLabel>
+                            <div className="relative">
+                              <FormControl className="">
+                                <Input
+                                  className="w-full px-4 py-2 border rounded-3xl focus:outline-none "
+                                  type={showPassword ? "text" : "password"}
+                                  placeholder="*********"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <Button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute inset-y-0 right-0 text-black text-xl bg-transparent hover:bg-transparent"
+                              >
+                                {showPassword ? (
+                                  <IoEyeOffOutline />
+                                ) : (
+                                  <BiShow />
+                                )}
+                              </Button>
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="confirmPassword"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-gray-700">
+                              Confirm Password
                             </FormLabel>
                             <div className="relative">
                               <FormControl className="">
@@ -173,15 +279,15 @@ const LoginPage = () => {
                           className="bg-secondary hover:bg-secondary text-sm font-normal px-8"
                           type="submit"
                         >
-                          Log In
+                          Sign Up
                         </Button>
                       </div>
                     </form>
                   </Form>
                   <p className="mt-4 text-sm text-center">
-                    Don't have any account?{" "}
-                    <Link href="/signup" className="text-yellow-500">
-                      Sign up
+                    have any account?
+                    <Link href="/login" className="text-yellow-500 ml-2">
+                      Sign In
                     </Link>
                   </p>
                 </div>

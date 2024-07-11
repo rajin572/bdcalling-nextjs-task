@@ -124,7 +124,7 @@ const Navbar = () => {
                   </Button>
                 </li>
               </Link>
-              <Link href="/signIn">
+              <Link href="/signup">
                 <li className="cursor-pointer text-sm font-semibold group relative px-2 md:text-[18px] ">
                   <Button className="px-4 bg-secondary text-white hover:bg-secondary hover:text-white border border-secondary rounded-lg duration-500">
                     Sign up
