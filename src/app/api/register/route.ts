@@ -8,19 +8,9 @@ export const POST = async (request: any) => {
   const { username, email, password, address, contactNumber } =
     await request.json();
 
-  console.log("Received data:", {
-    username,
-    email,
-    password,
-    address,
-    contactNumber,
-  });
-
-  // Create a DB Connection
   try {
     await connectDB();
   } catch (e) {
-    console.error("Database connection error:", e);
     return new NextResponse(
       e instanceof Error ? e.message : "An unexpected error occurred",
       {
@@ -29,9 +19,8 @@ export const POST = async (request: any) => {
     );
   }
 
-  // Encrypt the password
   const hashedPassword = await bcrypt.hash(password, 5);
-  // Form a DB payload
+
   const newUser = {
     username,
     password: hashedPassword,
@@ -40,11 +29,9 @@ export const POST = async (request: any) => {
     contactNumber,
   };
 
-  // Update the DB
   try {
     await createUser(newUser);
   } catch (err) {
-    console.error("Error creating user:", err);
     return new NextResponse(
       err instanceof Error ? err.message : "An unexpected error occurred",
       {

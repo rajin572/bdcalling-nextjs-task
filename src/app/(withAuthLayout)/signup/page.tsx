@@ -63,18 +63,9 @@ const SignUpPage = () => {
     const toastId = toast.loading("Sign up your account....");
 
     try {
-      // Check if passwords match
       if (values.password !== values.confirmPassword) {
         throw new Error("Password doesn't match");
       }
-
-      // Create a FormData object and append values
-      // const formData = new FormData();
-      // formData.append("username", values.username);
-      // formData.append("email", values.email);
-      // formData.append("password", values.password);
-      // formData.append("address", values.address);
-      // formData.append("contactNumber", values.contactNumber);
 
       const response = await fetch(`/api/register`, {
         method: "POST",
@@ -89,8 +80,6 @@ const SignUpPage = () => {
           contactNumber: values.contactNumber,
         }),
       });
-
-      console.log(response);
 
       if (response.status === 201) {
         toast.success("SignUp User Successfully", {
@@ -128,7 +117,7 @@ const SignUpPage = () => {
                     width={0}
                     height={0}
                     sizes="100vw"
-                    className="w-80 h-[500px]"
+                    className="w-full h-[700px]"
                   />
                 </div>
 

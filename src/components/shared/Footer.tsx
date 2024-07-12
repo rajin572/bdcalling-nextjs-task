@@ -1,5 +1,3 @@
-// components/Footer.tsx
-
 import Image from "next/image";
 import React from "react";
 import logo from "@/assest/logo/logo.png";

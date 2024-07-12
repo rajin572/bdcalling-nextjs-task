@@ -7,7 +7,6 @@ import { connectDB } from "@/utils/connect";
 import User from "@/models/userModel";
 
 export const authOptions: any = {
-  // Configure one or more authentication providers
   providers: [
     CredentialsProvider({
       id: "credentials",
@@ -55,7 +54,6 @@ export const authOptions: any = {
           }
           return true;
         } catch (err) {
-          console.log("Error saving user", err);
           return false;
         }
       }

@@ -24,7 +24,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { signIn } from "next-auth/react";
-import { doCredentialLogin } from "@/app/action";
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
@@ -96,7 +95,7 @@ const LoginPage = () => {
                     width={0}
                     height={0}
                     sizes="100vw"
-                    className="w-80 h-[500px]"
+                    className="w-full h-[600px]"
                   />
                 </div>
 

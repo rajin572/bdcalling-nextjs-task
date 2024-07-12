@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
 
-let isConnected = false; // Track the connection status
+let isConnected = false;
 
 export async function connectDB() {
   if (isConnected) {
-    console.log("Using existing database connection");
     return mongoose.connection;
   }
 
@@ -25,15 +24,13 @@ export async function connectDB() {
 
   try {
     await mongoose.connect(connectionString);
-    isConnected = true; // Mark as connected
-    console.log("Connected to MongoDB");
+    isConnected = true;
+
     return mongoose.connection;
   } catch (e) {
     if (e instanceof Error) {
-      console.error("Error connecting to MongoDB:", e.message);
       throw new Error(e.message);
     } else {
-      console.error("An unexpected error occurred while connecting to MongoDB");
       throw new Error("An unexpected error occurred");
     }
   }

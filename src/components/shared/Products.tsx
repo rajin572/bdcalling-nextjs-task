@@ -91,7 +91,7 @@ const Products = ({ children }: { children: ReactNode }) => {
   return (
     <div className="my-20 ">
       {children}
-      <div className="w-[70%] md:w-[85%] lg:w-[90%] mx-auto">
+      <div className="w-[70%] md:w-[85%] lg:w-[90%] mx-auto ">
         <Carousel>
           <CarouselContent>
             {feedbacks.map((feedback, index) => (

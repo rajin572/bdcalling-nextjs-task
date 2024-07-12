@@ -4,8 +4,6 @@ import Products from "@/components/shared/Products";
 import { getServerSession } from "next-auth";
 
 const ProductDetailPage = async () => {
-  const session = await getServerSession(authOptions);
-  console.log(session);
   return (
     <div>
       <ProductDetailSection />
