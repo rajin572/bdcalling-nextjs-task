@@ -4,7 +4,7 @@
 
 ## Live Link:
 
-Website Live Link: [Heritage Nest](https://bdcalling-simple-food.vercel.app/).
+Website Live Link: [Simple Good Food](https://bdcalling-simple-food.vercel.app/).
 
 ## Installation:
 
