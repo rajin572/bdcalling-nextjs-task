@@ -6,6 +6,7 @@ import Container from "../ui/Container";
 import logo from "@/assest/logo/logo.png";
 import Image from "next/image";
 import { Button } from "../ui/button";
+import { signOut } from "next-auth/react";
 
 const NavItems = [
   { name: "Home", route: "/" },
@@ -17,7 +18,7 @@ const NavItems = [
   { name: "FAQ", route: "/projects" },
 ];
 
-const Navbar = () => {
+const Navbar = ({ session }: { session: any | null }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <div className="bg-[#ECF5FF] z-[999] shadow py-1 text-slate-800">
@@ -117,20 +118,35 @@ const Navbar = () => {
           {/* //*More nav Links */}
           <div className="">
             <ul className="flex justify-end items-center gap-2 flex-row py-0">
-              <Link href="/login">
-                <li className="cursor-pointer text-sm group relative px-2 md:text-[18px] ">
-                  <Button className="px-4 hover:bg-secondary hover:text-white bg-slate-200 text-secondary border border-secondary rounded-lg duration-500">
-                    Log in
-                  </Button>
-                </li>
-              </Link>
-              <Link href="/signup">
-                <li className="cursor-pointer text-sm font-semibold group relative px-2 md:text-[18px] ">
-                  <Button className="px-4 bg-secondary text-white hover:bg-secondary hover:text-white border border-secondary rounded-lg duration-500">
-                    Sign up
-                  </Button>
-                </li>
-              </Link>
+              {session?.user ? (
+                <Link href="/signup">
+                  <li className="cursor-pointer text-sm font-semibold group relative px-2 md:text-[18px] ">
+                    <Button
+                      onClick={() => signOut()}
+                      className="px-4 bg-secondary text-white hover:bg-secondary hover:text-white border border-secondary rounded-lg duration-500"
+                    >
+                      Sign Out
+                    </Button>
+                  </li>
+                </Link>
+              ) : (
+                <>
+                  <Link href="/login">
+                    <li className="cursor-pointer text-sm group relative px-2 md:text-[18px] ">
+                      <Button className="px-4 hover:bg-secondary hover:text-white bg-slate-200 text-secondary border border-secondary rounded-lg duration-500">
+                        Log in
+                      </Button>
+                    </li>
+                  </Link>
+                  <Link href="/signup">
+                    <li className="cursor-pointer text-sm font-semibold group relative px-2 md:text-[18px] ">
+                      <Button className="px-4 bg-secondary text-white hover:bg-secondary hover:text-white border border-secondary rounded-lg duration-500">
+                        Sign up
+                      </Button>
+                    </li>
+                  </Link>
+                </>
+              )}
             </ul>
           </div>
         </header>

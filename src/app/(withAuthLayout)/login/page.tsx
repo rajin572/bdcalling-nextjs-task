@@ -23,6 +23,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
+import { signIn } from "next-auth/react";
+import { doCredentialLogin } from "@/app/action";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().min(2, {
@@ -35,6 +38,7 @@ const formSchema = z.object({
 });
 
 const LoginPage = () => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -45,14 +49,23 @@ const LoginPage = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     const toastId = toast.loading("Signing In....");
     try {
-      console.log(values);
-      toast.success("Sign In Successfully", {
-        id: toastId,
-        duration: 1000,
+      const res = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
       });
+      if (!!res?.error) {
+        throw new Error("Invalid Info");
+      } else {
+        toast.success("Sign In Successfully", {
+          id: toastId,
+          duration: 1000,
+        });
+        router.replace("/");
+      }
     } catch (error) {
       toast.error(String(error), {
         id: toastId,

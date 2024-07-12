@@ -4,14 +4,12 @@ import Container from "@/components/ui/Container";
 import Image from "next/image";
 import { useState } from "react";
 import { BiShow } from "react-icons/bi";
-import { GrHide } from "react-icons/gr";
 import backgroundImg from "@/assest/images/AuthBackground.jpeg";
 import authImg from "@/assest/images/authImage.png";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -25,6 +23,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import { IoEyeOffOutline } from "react-icons/io5";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -47,7 +46,8 @@ const formSchema = z.object({
   }),
 });
 
-const LoginPage = () => {
+const SignUpPage = () => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -59,17 +59,46 @@ const LoginPage = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     const toastId = toast.loading("Sign up your account....");
+
     try {
+      // Check if passwords match
       if (values.password !== values.confirmPassword) {
-        throw new Error("Password Dosen't Match");
+        throw new Error("Password doesn't match");
       }
-      console.log(values);
-      toast.success("Sign Up Successfully", {
-        id: toastId,
-        duration: 1000,
+
+      // Create a FormData object and append values
+      // const formData = new FormData();
+      // formData.append("username", values.username);
+      // formData.append("email", values.email);
+      // formData.append("password", values.password);
+      // formData.append("address", values.address);
+      // formData.append("contactNumber", values.contactNumber);
+
+      const response = await fetch(`/api/register`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          username: values.username,
+          email: values.email,
+          password: values.password,
+          address: values.address,
+          contactNumber: values.contactNumber,
+        }),
       });
+
+      console.log(response);
+
+      if (response.status === 201) {
+        toast.success("SignUp User Successfully", {
+          id: toastId,
+          duration: 1000,
+        });
+        router.push("/login");
+      }
     } catch (error) {
       toast.error(String(error), {
         id: toastId,
@@ -300,4 +329,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignUpPage;

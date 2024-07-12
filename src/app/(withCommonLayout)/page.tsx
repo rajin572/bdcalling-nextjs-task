@@ -4,10 +4,9 @@ import FrequenlyAsked from "@/components/home/FrequenlyAsked";
 import HighlightSection from "@/components/home/HighlightSection";
 import Testimonial from "@/components/home/Testimonial";
 import Products from "@/components/shared/Products";
-import { Button } from "@/components/ui/button";
 import React from "react";
 
-const HomePage = () => {
+const HomePage = async () => {
   return (
     <div>
       <Banner />
