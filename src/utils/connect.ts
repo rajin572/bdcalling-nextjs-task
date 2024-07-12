@@ -25,7 +25,7 @@ export async function connectDB() {
 
   try {
     await mongoose.connect(connectionString);
-    isConnected = true; // Mark as connected
+    isConnected = true;
     console.log("Connected to MongoDB");
     return mongoose.connection;
   } catch (e) {
