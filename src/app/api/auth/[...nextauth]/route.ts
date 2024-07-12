@@ -1,12 +1,12 @@
 import NextAuth from "next-auth";
 import { Account, User as AuthUser } from "next-auth";
-import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { connectDB } from "@/utils/connect";
 import User from "@/models/userModel";
 
 export const authOptions: any = {
+  // Configure one or more authentication providers
   providers: [
     CredentialsProvider({
       id: "credentials",
@@ -48,6 +48,7 @@ export const authOptions: any = {
             const newUser = new User({
               email: user.email,
             });
+
             await newUser.save();
             return true;
           }
@@ -60,5 +61,6 @@ export const authOptions: any = {
     },
   },
 };
+
 export const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

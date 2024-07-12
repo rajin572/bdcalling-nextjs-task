@@ -95,7 +95,7 @@ const LoginPage = () => {
                     width={0}
                     height={0}
                     sizes="100vw"
-                    className="w-full h-[600px]"
+                    className="w-80 h-[500px]"
                   />
                 </div>
 

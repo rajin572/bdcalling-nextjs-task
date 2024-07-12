@@ -3,30 +3,22 @@ import { createUser } from "@/queries/users";
 import bcrypt from "bcryptjs";
 import { connectDB } from "@/utils/connect";
 
-interface RequestBody {
-  username: string;
-  email: string;
-  password: string;
-  address: string;
-  contactNumber: string;
-}
+export const POST = async (request: any) => {
+  const { username, email, password, address, contactNumber } =
+    await request.json();
 
-export const POST = async (request: Request) => {
-  let body: RequestBody;
-
-  try {
-    body = await request.json();
-  } catch (e) {
-    return new NextResponse("Invalid JSON", {
-      status: 400,
-    });
-  }
-
-  const { username, email, password, address, contactNumber } = body;
+  console.log("Received data:", {
+    username,
+    email,
+    password,
+    address,
+    contactNumber,
+  });
 
   try {
     await connectDB();
   } catch (e) {
+    console.error("Database connection error:", e);
     return new NextResponse(
       e instanceof Error ? e.message : "An unexpected error occurred",
       {
@@ -48,6 +40,7 @@ export const POST = async (request: Request) => {
   try {
     await createUser(newUser);
   } catch (err) {
+    console.error("Error creating user:", err);
     return new NextResponse(
       err instanceof Error ? err.message : "An unexpected error occurred",
       {

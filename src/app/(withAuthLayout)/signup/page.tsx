@@ -81,6 +81,8 @@ const SignUpPage = () => {
         }),
       });
 
+      console.log(response);
+
       if (response.status === 201) {
         toast.success("SignUp User Successfully", {
           id: toastId,
@@ -117,7 +119,7 @@ const SignUpPage = () => {
                     width={0}
                     height={0}
                     sizes="100vw"
-                    className="w-full h-[700px]"
+                    className="w-80 h-[500px]"
                   />
                 </div>
 
