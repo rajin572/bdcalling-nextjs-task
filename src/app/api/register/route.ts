@@ -2,11 +2,27 @@ import { NextResponse } from "next/server";
 import { createUser } from "@/queries/users";
 import bcrypt from "bcryptjs";
 import { connectDB } from "@/utils/connect";
-import User from "@/models/userModel";
 
-export const POST = async (request: any) => {
-  const { username, email, password, address, contactNumber } =
-    await request.json();
+interface RequestBody {
+  username: string;
+  email: string;
+  password: string;
+  address: string;
+  contactNumber: string;
+}
+
+export const POST = async (request: Request) => {
+  let body: RequestBody;
+
+  try {
+    body = await request.json();
+  } catch (e) {
+    return new NextResponse("Invalid JSON", {
+      status: 400,
+    });
+  }
+
+  const { username, email, password, address, contactNumber } = body;
 
   try {
     await connectDB();

@@ -8,6 +8,7 @@ import { getServerSession } from "next-auth";
 const CommonLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await getServerSession(authOptions);
 
+  console.log(session);
   return (
     <div className="">
       <TopNav />
