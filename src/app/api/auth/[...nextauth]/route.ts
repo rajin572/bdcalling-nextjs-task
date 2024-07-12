@@ -1,19 +1,12 @@
-import NextAuth, {
-  NextAuthOptions,
-  User as NextAuthUser,
-  Account,
-} from "next-auth";
+import NextAuth from "next-auth";
+import { Account, User as AuthUser } from "next-auth";
+import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { connectDB } from "@/utils/connect";
-import User, { IUser } from "@/models/userModel"; // Make sure IUser is defined in userModel
+import User from "@/models/userModel";
 
-interface Credentials {
-  email: string;
-  password: string;
-}
-
-export const authOptions: NextAuthOptions = {
+export const authOptions: any = {
   providers: [
     CredentialsProvider({
       id: "credentials",
@@ -22,52 +15,32 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials: Credentials | undefined) {
-        if (!credentials) {
-          return null;
-        }
-
+      async authorize(credentials: any) {
         await connectDB();
         try {
-          const user = await User.findOne({ email: credentials.email })
-            .lean()
-            .exec();
-          if (user && !Array.isArray(user)) {
-            const typedUser = user as unknown as IUser;
+          const user = await User.findOne({ email: credentials.email });
+          if (user) {
             const isPasswordCorrect = await bcrypt.compare(
               credentials.password,
-              typedUser.password
+              user.password
             );
             if (isPasswordCorrect) {
-              return {
-                ...typedUser,
-                id: typedUser._id.toString(),
-              } as NextAuthUser;
+              return user;
             }
           }
-          return null;
-        } catch (err: unknown) {
-          if (err instanceof Error) {
-            throw new Error(err.message);
-          }
-          throw new Error("An unexpected error occurred");
+        } catch (err: any) {
+          throw new Error(err);
         }
       },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async signIn({
-      user,
-      account,
-    }: {
-      user: NextAuthUser;
-      account: Account | null;
-    }) {
-      if (account?.provider === "credentials") {
+    async signIn({ user, account }: { user: AuthUser; account: Account }) {
+      if (account?.provider == "credentials") {
         return true;
       }
-      if (account?.provider === "github") {
+      if (account?.provider == "github") {
         await connectDB();
         try {
           const existingUser = await User.findOne({ email: user.email });
@@ -80,13 +53,12 @@ export const authOptions: NextAuthOptions = {
           }
           return true;
         } catch (err) {
+          console.log("Error saving user", err);
           return false;
         }
       }
-      return false;
     },
   },
 };
-
 export const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
